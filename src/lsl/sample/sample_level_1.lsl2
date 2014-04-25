@@ -1,0 +1,1 @@
+llSay( PUBLIC_CHANNEL, "Touched! from sample_level_1.lsl2" );
