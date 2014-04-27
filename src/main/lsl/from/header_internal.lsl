@@ -6,37 +6,37 @@
 ➄: ERROR IN TARGET SCRIPT
 ✖: SOME ERROR
 */
-string ${library.name.abbr.upper}_ERROR = "";
+string COS_ERROR = "";
 /**
  * ${library.name} Access Boilerplate v${library.version} - leave as-is
  *
  * Invoke a specific funtion in some other script in this prim.
- * Requires that the other script has been set up with the ${library.name.abbr.upper} Boilerplate to allow
+ * Requires that the other script has been set up with the COS Boilerplate to allow
  * function calls from other scripts.
  *
- * If you try to make an ${library.name.abbr.upper} call to a script that is not configured to handle them,
+ * If you try to make an COS call to a script that is not configured to handle them,
  * your own script will lock up.
  *
  * @param _target_script the name of the script that contains the function to call
  * @param _target_function the name of the function to call
  * @param _json_args the arguments to pass to the _target_function, as JSON.
 **/
-string ${library.name.abbr.lower}_send(string _target_script, string _target_function, string _json_args) {
+string cos_send(string _target_script, string _target_function, string _json_args) {
     
     // If the named script isn't in this prim, we can't possibly succeed.
     if( INVENTORY_NONE == llGetInventoryType( _target_script ) ) {
-        ${library.name.abbr.upper}_ERROR = "➀";
+        COS_ERROR = "➀";
         return "✖";
     }
     
-    // We need to be able to uniquely identify this ${library.name.abbr.upper} request from all others.
+    // We need to be able to uniquely identify this COS request from all others.
     key this_call = llGenerateKey();
     
-    // And we will need to have a relatively-normative string format to identify ${library.name.abbr.upper} intentions
+    // And we will need to have a relatively-normative string format to identify COS intentions
     string lock_text = "cos:lock:" + (string)this_call;
     
     // We are going to obtain a lock on the prim's description field,
-    // preventing any other ${library.name.abbr.upper} processes from using it until we get an answer
+    // preventing any other COS processes from using it until we get an answer
     // from our target script.
     integer have_lock = FALSE;
     integer start = llGetUnixTime();
@@ -46,11 +46,11 @@ string ${library.name.abbr.lower}_send(string _target_script, string _target_fun
         // TODO: Race condition
         while( 
         "" != llGetObjectDesc() 
-        && llGetUnixTime() - start < 10 );
+        && llGetUnixTime() - start < ${timeout} );
         
         if( "" != llGetObjectDesc() ) {
             // we timed out.
-            ${library.name.abbr.upper}_ERROR = "➂";
+            COS_ERROR = "➂";
             return "✖";
         }
         
@@ -69,7 +69,7 @@ string ${library.name.abbr.lower}_send(string _target_script, string _target_fun
         
     if( !have_lock ) {
         // We timed out
-        ${library.name.abbr.upper}_ERROR = "➃";
+        COS_ERROR = "➃";
         return "✖";
     }
     
@@ -83,11 +83,11 @@ string ${library.name.abbr.lower}_send(string _target_script, string _target_fun
     full_json_args = llJsonSetValue( full_json_args, ["_f"], _target_function );
     full_json_args = llJsonSetValue( full_json_args, ["_k"], this_call );
     
-    // Send out the ${library.name.abbr.upper} request.
+    // Send out the COS request.
     llMessageLinked( LINK_THIS, 0, full_json_args, "cos_send" );
     
     // When we see this string as the start of the object description,
-    // we'll know that the target script has processed our ${library.name.abbr.upper} request.
+    // we'll know that the target script has processed our COS request.
     string result_text = "cos:out:" + (string)this_call;
     string stream_text = "cos:stp:" + (string)this_call;
     
@@ -104,9 +104,9 @@ string ${library.name.abbr.lower}_send(string _target_script, string _target_fun
     } while( 
         result_text != desc_check && 
         stream_text != desc_check &&
-        llGetUnixTime() - start <= 10 ); // TODO: This is set very low for testing purposes.
+        llGetUnixTime() - start <= $timeout ); // TODO: This is set very low for testing purposes.
     
-    ${library.name.abbr.upper}_ERROR = "➄";
+    COS_ERROR = "➄";
     string result = "✖";
     
     if( desc_check == stream_text ) {
@@ -142,17 +142,17 @@ string ${library.name.abbr.lower}_send(string _target_script, string _target_fun
         llSetObjectDesc( stream_consumed_text );
         
         result = llBase64ToString( result );
-        ${library.name.abbr.upper}_ERROR = "";
+        COS_ERROR = "";
         
     } else if( desc_check == result_text ) {
         // We can simply return the result.
         result = llBase64ToString( llGetSubString( desc, 45, llStringLength( desc ) -1 ) );
-        ${library.name.abbr.upper}_ERROR = "";
+        COS_ERROR = "";
     } else {
-        ${library.name.abbr.upper}_ERROR = "➃";
+        COS_ERROR = "➃";
     }
     
-    // Clear the object description so other ${library.name.abbr.upper} requests can use it.
+    // Clear the object description so other COS requests can use it.
     llSetObjectDesc( "" );
     
     // return the results of the function call from the _target_script

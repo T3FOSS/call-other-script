@@ -30,7 +30,7 @@ list BENCHMARK_TESTS = [
     
 list ALL_TESTS;
 
-float ${library.name.abbr.lower}_testrunner(string _test_name, integer _verbose) {
+float cos_testrunner(string _test_name, integer _verbose) {
     if( _verbose ) {
         llSay( PUBLIC_CHANNEL, _test_name );
     }
@@ -104,7 +104,7 @@ integer acc(string _args) {
 /**
  * Blah blah
  * blee
- * ${library.name.abbr.upper} is about 17 times slower than normal.
+ * COS is about 17 times slower than normal.
  **/
 bench_basic(integer _verbose) {
      
@@ -123,17 +123,17 @@ bench_basic(integer _verbose) {
     llResetTime();
     
     for( i = 0; i < 500; i++ ) {
-        string result = ${library.name.abbr.lower}_send( "${library.name.abbr.lower}_test_receiver.lsl2", "acc", "{\"num\":" + (string)i + "}" );
+        string result = cos_send( "cos_test_receiver.lsl2", "acc", "{\"num\":" + (string)i + "}" );
     }
     
-    float ${library.name.abbr.lower}_script_elapsed = llGetTime();
+    float cos_script_elapsed = llGetTime();
     
     assertLessThan(
-        "${library.name.abbr.lower}_bench_basic",
+        "cos_bench_basic",
         _verbose,
-        ${library.name.abbr.lower}_script_elapsed,
+        cos_script_elapsed,
         FACTOR * same_script_elapsed,
-        "${library.name.abbr.upper} function calls should take less than " + (string)FACTOR + " times as long as in-script calls." );
+        "COS function calls should take less than " + (string)FACTOR + " times as long as in-script calls." );
 }
         
 /*
@@ -142,12 +142,12 @@ Tests to write:
     
 
     (need to somewhat-finalize receive snippet)
-    - multi-hop ${library.name.abbr.upper} works
-    - reentrant multi-hop ${library.name.abbr.upper} fails fast
-    - many scripts into one ${library.name.abbr.upper} 
+    - multi-hop COS works
+    - reentrant multi-hop COS fails fast
+    - many scripts into one COS 
 
     Benchmarks:
-    - speed (compare in-script fcn calls to ${library.name.abbr.upper} calls)
+    - speed (compare in-script fcn calls to COS calls)
     - consitency (run same test many times, ensure all executions are within certian rainge)
 */
 
@@ -160,7 +160,7 @@ default
         llSetObjectDesc( "" );
         llListen(PUBLIC_CHANNEL, "", NULL_KEY, "" );
         ALL_TESTS = UNIT_TESTS + ASYNC_TESTS + BENCHMARK_TESTS;
-        llSay( PUBLIC_CHANNEL, "${library.name.abbr.upper} Test Driver Ready" );
+        llSay( PUBLIC_CHANNEL, "COS Test Driver Ready" );
     }
 
     listen(integer _channel, string _name, key _id, string _message)
@@ -169,12 +169,12 @@ default
     
         string command = llList2String( parts, 0 );
         
-        if( "${library.name.abbr.lower}t" == command ) {
+        if( "cost" == command ) {
             
             TEST_FAILURES = 0;
             
-            llSetObjectName( "${library.name.abbr.upper} Draft " + llGetTimestamp() );
-            llSay( PUBLIC_CHANNEL, "Testing ${library.name.abbr.upper} Engine..." );
+            llSetObjectName( "COS Draft " + llGetTimestamp() );
+            llSay( PUBLIC_CHANNEL, "Testing COS Engine..." );
             llSetObjectDesc( "" );
             llMessageLinked( LINK_THIS, 0, "start tests", NULL_KEY );
             llSleep( 1 );
@@ -213,7 +213,7 @@ default
             integer num_tests = llGetListLength( test_list );
             
             for ( test_index = 0; test_index < num_tests; test_index++ ) {
-                elapsed += ${library.name.abbr.lower}_testrunner( llList2String( test_list, test_index ), verbose );
+                elapsed += cos_testrunner( llList2String( test_list, test_index ), verbose );
                 
                 if( !verbose ) {
                     llSay( PUBLIC_CHANNEL, "(" + (string)(test_index + 1) + "/" + (string)num_tests + ")" );

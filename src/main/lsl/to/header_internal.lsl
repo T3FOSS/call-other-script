@@ -1,18 +1,18 @@
 /**
  * ${library.name} Public Interface Boilerplate v${library.version} - Leave as-is
  *
- * This is the function that handles incoming ${library.name.abbr.upper} requests,
+ * This is the function that handles incoming COS requests,
  * determines whether they are destined for this script, and dispatches
  * the call to the function in this script.
  *
- * @param _full_json_args the arguments for the target function, as JSON. Includes the three "magic" ${library.name.abbr.upper} parameters:
+ * @param _full_json_args the arguments for the target function, as JSON. Includes the three "magic" COS parameters:
  *  _script: the target script (may or may not be THIS script)
  *  _function: the function to call (may or may not be present in this script...)
- *  _key: the UUID identifying this particular ${library.name.abbr.upper} request.
+ *  _key: the UUID identifying this particular COS request.
 **/
-${library.name.abbr.lower}_recv( string _full_json_args ) {
+cos_recv( string _full_json_args ) {
     
-    // Is this ${library.name.abbr.upper} request intended for this script?
+    // Is this COS request intended for this script?
     string target_script = llJsonGetValue( _full_json_args, [ "_s" ] );
     if( target_script != llGetScriptName() ) {
         return;
@@ -21,7 +21,7 @@ ${library.name.abbr.lower}_recv( string _full_json_args ) {
     // What function are we supposed to call?
     string target_function = llJsonGetValue( _full_json_args, [ "_f" ] );
     
-    // Remove the ${library.name.abbr.upper}-specific values from the JSON arguments.
+    // Remove the COS-specific values from the JSON arguments.
     // Not strictly necessary, and could be stripped out of llJsonSetValue is too resource-intensive.
     string stripped_args = _full_json_args;
     stripped_args = llJsonSetValue( stripped_args, [ "_f" ], JSON_DELETE );
@@ -29,9 +29,9 @@ ${library.name.abbr.lower}_recv( string _full_json_args ) {
     stripped_args = llJsonSetValue( stripped_args, [ "_k" ], JSON_DELETE );
     
     // Invoke the requested function with the provided arguments and get its result.
-    string result = ${library.name.abbr.lower}_switch( target_function, stripped_args );
+    string result = cos_switch( target_function, stripped_args );
     
-    // We're ready to write the response out to the script that's waiting on our ${library.name.abbr.upper} response.
+    // We're ready to write the response out to the script that's waiting on our COS response.
     // We need to be able to identify that response.
     string this_call = llJsonGetValue( _full_json_args, ["_k"] );
     
@@ -46,14 +46,14 @@ ${library.name.abbr.lower}_recv( string _full_json_args ) {
         have_lock = llGetSubString( desc, 0, 44 ) == have_lock_str;
     } while ( 
         !have_lock &&
-        llGetUnixTime() - start_time < 10 ); // TODO: This is set very low for testing purposes.
+        llGetUnixTime() - start_time < ${timeout} ); // TODO: This is set very low for testing purposes.
         
     if( !have_lock ) {
         return;
     }
     
     if( "✖" == result ) {
-        // The target function isn't exposed to ${library.name.abbr.upper}.
+        // The target function isn't exposed to COS.
         llSetObjectDesc( "cos:out:" + this_call + ":" + llStringToBase64( result ) );
     } else {
         
