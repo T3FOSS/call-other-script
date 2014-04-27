@@ -1,3 +1,0 @@
-llSay( PUBLIC_CHANNEL, "Touched! from sample_level_1.lsl2" );
-// This is a comment in sample_level_1.lsl2
-string cats = "cute";
