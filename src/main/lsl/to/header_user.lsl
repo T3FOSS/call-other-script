@@ -10,7 +10,7 @@
  * @param _json_args the arguments to pass to the _function
  * @return the result of invoking the named _function with the provided _json_args as the arguments, cast to a string.
 **/
-string slc_switch( string _function, string _json_args ) {
+string cos_switch( string _function, string _json_args ) {
     
     #{${exposed.functions exposed_functions.lsl}}
     
