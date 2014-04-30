@@ -2,11 +2,16 @@
 
 default
 {
+	state_entry()
+	{
+		llSetObjectDesc( "" );
+	}
+	
 	touch_start(integer _num_touches)
 	{
 		integer basenum = 1;
 		
-		string result = cos_send( "cos_library_template.lsl", "sample", "{\"num\":" + basenum + "}" );
+		string result = cos_send( "cos_library_template.lsl", "sample", "{\"num\":" + (string)basenum + "}" );
 		
 		if( "✖" == result ) {
 			if( "➀" == COS_ERROR ) {
