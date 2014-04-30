@@ -104,7 +104,7 @@ string cos_send(string _target_script, string _target_function, string _json_arg
     } while( 
         result_text != desc_check && 
         stream_text != desc_check &&
-        llGetUnixTime() - start <= $timeout ); // TODO: This is set very low for testing purposes.
+        llGetUnixTime() - start <= ${timeout} ); // TODO: This is set very low for testing purposes.
     
     COS_ERROR = "➄";
     string result = "✖";
