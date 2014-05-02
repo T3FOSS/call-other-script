@@ -2,7 +2,7 @@ var app = {};
 
 var Router = Backbone.Router.extend({
 	routes: {
-		"": "",
+		"": "about",
 		"about": "about",
 		"use": "use",
 		"build": "build",
@@ -13,6 +13,7 @@ var Router = Backbone.Router.extend({
 	about: function() {
 		$.ajax({
 			url: "html/about.html",
+			cache: false,
 			success: function(data, textStatus, jqXHR) {
 				app.show_content( data );
 			},
@@ -23,6 +24,7 @@ var Router = Backbone.Router.extend({
 	use: function() {
 		$.ajax({
 			url: "html/use.html",
+			cache: false,
 			success: function(data, textStatus, jqXHR) {
 				app.show_content( data );
 			},
@@ -33,6 +35,7 @@ var Router = Backbone.Router.extend({
 	build: function() {
 		$.ajax({
 			url: "html/build.html",
+			cache: false,
 			success: function(data, textStatus, jqXHR) {
 				app.show_content( data );
 			},
@@ -43,6 +46,7 @@ var Router = Backbone.Router.extend({
 	documentation: function() {
 		$.ajax({
 			url: "html/doc.html",
+			cache: false,
 			success: function(data, textStatus, jqXHR) {
 				app.show_content( data );
 			},
@@ -53,6 +57,7 @@ var Router = Backbone.Router.extend({
 	bugs: function() {
 		$.ajax({
 			url: "html/bugs.html",
+			cache: false,
 			success: function(data, textStatus, jqXHR) {
 				app.show_content( data );
 			},
