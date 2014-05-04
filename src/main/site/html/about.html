@@ -1,4 +1,24 @@
+<h2>Call functions in one script, from another</h2>
+
 <p>
-	<h2>In SecondLife, you cannot call a function in one script, from another script.</h2>
-	<h3>Until now</h3>
+<strong>library.lsl</strong>
+<pre class="brush: lsl">
+...
+string some_function(string _input) {
+	// do stuff
+}
+...
+</pre>
+<br/>
+<strong>your_script.lsl</strong>
+<pre class="brush: lsl; class-name: 'well'">
+default
+{
+	state_entry
+	{
+		string result = callOtherScript( "library.lsl", "some_function", "the input" );
+		llOwnerSay( "The other script said '" + result + "'!" );
+	}
+}
+</pre>
 </p>

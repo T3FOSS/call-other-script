@@ -70,6 +70,7 @@ var router = new Router();
 
 app.show_content = function( data ) {
 	$("#content_div").html( data );
+	SyntaxHighlighter.highlight();
 }
 
 app.failure = function(jqXHR, textStatus, data) {

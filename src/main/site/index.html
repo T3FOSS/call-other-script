@@ -20,8 +20,41 @@
 		<!-- backbone -->
 		<script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
 		
+		<!-- LSL syntax highlighter -->
+		<script src="/js/syntax-highlighter/shCore.min.js"></script>
+		<script src="/js/syntax-highlighter/shBrushLSL.js"></script>
+		<link rel="stylesheet" href="/css/shThemeLSL.css" />
+		
+		<style type="text/css">
+		div.syntaxhighlighter .container:before,div.syntaxhighlighter .container:after {
+		    content:none;
+		}
+		
+		div.syntaxhighlighter table tbody tr td div {
+			width: auto;
+		}
+		
+		div.syntaxhighlighter .toolbar {
+			display:none;
+		}
+		
+		div.syntaxhighlighter code {
+			background-color: inherit;
+		}
+		
+		.syntaxhighlighter .gutter .line {
+			padding-right: 2px;
+			padding-left: 2px;
+		}
+		
+		.syntaxhighlighter.well {
+			padding: 0px;
+			background-image: none;
+		}
+		</style>
+		
 		<!-- this application -->
-		<script src="js/app.js"></script>
+		<script src="/js/app.js"></script>
 	</head>
 	<body>
 		<nav class="navbar navbar-default">
