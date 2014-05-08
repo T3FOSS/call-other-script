@@ -1,0 +1,29 @@
+div.syntaxhighlighter .container:before,div.syntaxhighlighter .container:after {
+    content:none;
+}
+
+div.syntaxhighlighter table tbody tr td div {
+	width: auto;
+}
+
+div.syntaxhighlighter .toolbar {
+	display:none;
+}
+
+div.syntaxhighlighter code {
+	background-color: inherit;
+}
+
+.syntaxhighlighter .gutter .line {
+	padding-right: 2px;
+	padding-left: 2px;
+}
+
+.syntaxhighlighter.well {
+	padding: 0px;
+	background-image: none;
+}
+
+.syntaxhighlighter code {
+	padding: 0px;
+}

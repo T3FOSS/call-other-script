@@ -1,0 +1,5 @@
+.pseudo-table div {
+	border-bottom-width: 1px;
+	border-bottom-color: #AAA;
+	border-bottom-style: solid;
+}
