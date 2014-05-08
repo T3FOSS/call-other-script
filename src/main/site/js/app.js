@@ -26,7 +26,12 @@ var Router = Backbone.Router.extend({
 			url: "html/use.html",
 			cache: false,
 			success: function(data, textStatus, jqXHR) {
-				app.show_content( data );
+				app.show_content( data, function() {
+					$("#fooclick").click(function(event){
+						alert("fooclick");
+						app.fetch_lsl("foo", "to/header_internal.lsl", {});
+					});
+				});
 			},
 			failure: app.failure
 		});
@@ -68,13 +73,33 @@ var Router = Backbone.Router.extend({
 
 var router = new Router();
 
-app.show_content = function( data ) {
+app.show_content = function( data, setup ) {
 	$("#content_div").html( data );
 	SyntaxHighlighter.highlight();
+	if( "undefined" !== typeof setup ) {
+		setup();
+	} else {
+		alert("setup undef");
+	}
 }
 
 app.failure = function(jqXHR, textStatus, data) {
 	
+}
+
+app.fetch_lsl = function(element_id, script_path, options) {
+	$.ajax({
+		url: "/rb/index.rb?prop_path=properties/defaults.properties&org=T3FOSS&repo=call-other-script&file=" + script_path,
+		cache: false,
+		success: function(data, textStatus, jqXHR) {
+			// delegate to loader widget
+			$("#" + element_id).html( data );
+		},
+		failure: function(jqXHR, textStatus, data) {
+			// delegate to loader widget.
+			$("#" + element_id).html( textStatus );
+		}
+	});
 }
 
 Backbone.history.start({pushState: true});

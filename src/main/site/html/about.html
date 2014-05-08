@@ -1,15 +1,44 @@
 <h2>Call functions in one script, from another</h2>
 
 <p>
-<strong>library.lsl</strong>
+	Separation of concerns is a keystone of good software design.
+	But that's hard when your entire application has to be in one file - 
+	all your functions, all your state, all your variables.
+	It would be great if, when appropriate, you could split your applications
+	up into different scripts. Now, you can.
+</p>
+
+<p>
+	<b>call-other-script</b> provides a <b><a target="_blank" href="https://wikipedia.org/wiki/Boilerplate_code">boilerplate</a></b>
+	that you paste into the top of your scripts to either make some of their functions available to other scripts
+	(as a <b>library</b>) or to give them access to the functions in library scripts created this way.
+</p>
+
+<p>
 <pre class="brush: lsl">
-...
-string some_function(string _input) {
-	// do stuff
-}
-...
+string callOtherScript(string scriptName, string functionName, string jsonArguments)
 </pre>
 <br/>
+<div class="container-fluid pseudo-table">
+	<div class="row">
+		<div class="col-md-2">string</div>
+		<div class="col-md-2">scriptName</div>
+		<div class="col-md-8">The name of the script that contains the function you want to call.</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-md-2">string</div>
+		<div class="col-md-2">functionName</div>
+		<div class="col-md-8">The name of the function you want to call.</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-md-2">string</div>
+		<div class="col-md-2">jsonArguments</div>
+		<div class="col-md-8">The arguments to pass to the target function, in a JSON string.</div>
+	</div>
+</div>
+</p>
 <strong>your_script.lsl</strong>
 <pre class="brush: lsl; class-name: 'well'">
 default
@@ -21,4 +50,12 @@ default
 	}
 }
 </pre>
-</p>
+
+<strong>library.lsl</strong>
+<pre class="brush: lsl">
+...
+string some_function(string _input) {
+	// do stuff
+}
+...
+</pre>
