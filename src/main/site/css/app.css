@@ -3,3 +3,9 @@
 	border-bottom-color: #AAA;
 	border-bottom-style: solid;
 }
+
+textarea#script {
+	width: 100%;
+	min-height: 300px;
+	font-family: courier;
+}

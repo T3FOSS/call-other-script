@@ -32,3 +32,9 @@ code_file = params["file"]
 code_data = demo.process_file( code_file )
 
 puts code_data
+MORE STUFF
+/**
+Multiline comment
+*/
+STUFF
+// singleline comment

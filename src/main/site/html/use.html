@@ -4,5 +4,34 @@
 	In order to make one of your scripts into a <strong>client</strong> script, you will need
 	to paste the <strong>client boilerplate</strong> into your script.
 </p>
-<textarea id="foo"></textarea>
-<a id="fooclick" href="#">get it</a>
+
+<div class="well">
+	<div class="row">
+		<div class="col-md-6">
+			<div class="btn-group">
+				<button 
+					type="button" 
+					class="btn btn-primary btn-lg option_button" 
+					data-toggle="tooltip"
+					data-placement="bottom"
+					title="Remove comments from the boilerplate."
+					id="comment_button">
+					<span class="glyphicon glyphicon-ok"></span> Comments
+				</button>
+				<button type="button" class="btn btn-primary btn-lg option_button" id="whitespace_button">
+					<span class="glyphicon glyphicon-ok"></span> Whitespace
+				</button>
+			</div>
+		</div>
+		<div class="col-md-6 text-right">
+			<div class="btn-group">
+				<button type="button" class="btn btn-warning btn-lg" id="fetch_script">Reload</button>
+			</div>
+		</div>
+	</div>
+	
+	<br/><br/>
+	<textarea id="script"></textarea>
+</div>
+
+<a id="fetch_script" href="#">get it</a>
