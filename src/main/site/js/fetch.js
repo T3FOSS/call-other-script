@@ -17,7 +17,13 @@ define([
 				if( !options.whitespace ) {
 					
 					// remove non-semantic whitespace.
-					data = data.replace( /(?=.*)[\r\n \t\s]*[\r\n]+(?!=[^\r\n \t\s])/g, "");
+					
+					if( !!options.comments ) {
+						// Must not remove whitespace at end of single-line comments
+						data = data.replace( /(?=([^#]|!\/\/)*)[\r\n \t\s]*[\r\n]+(?!=[^\r\n \t\s])/g, "");
+					} else {
+						data = data.replace( /(?=.*)[\r\n \t\s]*[\r\n]+(?!=[^\r\n \t\s])/g, "");
+					}
 				}
 				
 				$("#" + element_id).html( data );
